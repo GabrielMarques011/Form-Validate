@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="Css/style.css">
+    <title>Formulario Validação</title>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="lateral">
+
+        </div>
+
+        <div class="boxUm">
+
+            <div class="text">
+
+                <p>A Complete and User-Friendly System!</p>
+
+            </div>
+
+        </div>
+
+        <div class="boxDois">
+
+            <form id="form">
+
+                <p>Crie o seu Usuario</p>
+
+                <label class="nome">Digite seu Nome:</label>
+                <input type="text" id="nome" class="input required" oninput="validacaoNome()">
+                <span class="span-required">O nome precisa de no minimo 4 caracteres</span>
+
+                <label class="sobrenome">Digite seu Sobrenome:</label>
+                <input type="text" id="sobrenome" class="input required" oninput="validacaoSobrenome()">
+                <span class="span-required">O sobrenome precisa de no minimo 4 caracteres</span>
+
+                <!-- <label class="cpf">Digite seu CPF:</label>
+                <input type="number" id="cpf" class="input required">
+                <span class="span-required">Os digitos precisam de </span> -->
+
+                <label class="email">Digite seu E-mail:</label>
+                <input type="email" id="email" class="input required" oninput="validacaoEmail()">
+                <span class="span-required">O e-mail está invalido</span>
+
+                <label class="senha">Digite sua Senha:</label>
+                <input type="password" id="senha" class="input required" oninput="validacaoSenha()">
+                <span class="span-required">A senha precisa de no minimo 8 digitos</span>
+
+                <label class="senha">Confirme sua Senha:</label>
+                <input type="password" id="senha" class="input required" oninput="confirmarSenha()">
+                <span class="span-required">Senha não compativel com a de cima</span>
+
+                <div class="boxTres">
+
+                    <button class="button" type="submit">Cadastrar</button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <div id="toast" class="toast">Usuário criado com sucesso!</div>
+
+    <script src="Js/main.js"></script>
+
+</body>
+
+</html>
