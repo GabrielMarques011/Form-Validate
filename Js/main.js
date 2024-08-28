@@ -2,7 +2,6 @@ const form = document.getElementById('form');
 const campos = document.querySelectorAll('.required');
 const span = document.querySelectorAll('.span-required'); //pegando todos os elementos com a mesma class
 const emailRegex = /^([A-Za-z0-9_\-.+])+@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,})$/; //validação de e-mail, peguie do stack
-const numberRegex = '^\\([0-9]{2}\\)((3[0-9]{7})|(9[0-9]{8}))$';
 
 form.addEventListener('submit', (event) =>{
     event.preventDefault();
@@ -37,6 +36,15 @@ function removendoErro(index) {
     campos[index].style.border = '';
     span[index].style.display = 'none';
     return true; // Indica que não há erro
+}
+
+function showToast(message) {
+    const toast = document.getElementById('toast');
+    toast.textContent = message;
+    toast.className = 'toast show';
+    setTimeout(() => {
+        toast.className = toast.className.replace('show', '');
+    }, 3000);
 }
 
 function validacaoNome() {
@@ -86,13 +94,4 @@ function confirmarSenha() {
     } else {
         return adicionandoErro(5);
     }
-}
-
-function showToast(message) {
-    const toast = document.getElementById('toast');
-    toast.textContent = message;
-    toast.className = 'toast show';
-    setTimeout(() => {
-        toast.className = toast.className.replace('show', '');
-    }, 3000);
 }
