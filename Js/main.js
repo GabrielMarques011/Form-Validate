@@ -2,15 +2,17 @@ const form = document.getElementById('form');
 const campos = document.querySelectorAll('.required');
 const span = document.querySelectorAll('.span-required'); //pegando todos os elementos com a mesma class
 const emailRegex = /^([A-Za-z0-9_\-.+])+@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,})$/; //validação de e-mail, peguie do stack
+const numberRegex = '^\\([0-9]{2}\\)((3[0-9]{7})|(9[0-9]{8}))$';
 
 form.addEventListener('submit', (event) =>{
     event.preventDefault();
-    if (validacaoNome() && validacaoSobrenome() && validacaoEmail() && validacaoSenha() && confirmarSenha()) {
+    if (validacaoNome() && validacaoSobrenome() && validacaoEmail() && validacaoNumero() && validacaoSenha() && confirmarSenha()) {
         const dados = {
             nome: campos[0].value,
             sobrenome: campos[1].value,
             email: campos[2].value,
-            senha: campos[3].value
+            telefone: campos[3].value,
+            senha: campos[4].value
         };
         console.log(JSON.stringify(dados)); // Aqui você pode enviar os dados para o servidor ou usá-los conforme necessário
 
@@ -61,20 +63,28 @@ function validacaoEmail() {
     }
 }
 
-function validacaoSenha() {
-    if (campos[3].value.length < 8) {
+function validacaoNumero(){
+    if(campos[3].value.length < 14){
         return adicionandoErro(3);
     } else {
-        removendoErro(3);
+        return removendoErro(3);
+    }
+}
+
+function validacaoSenha() {
+    if (campos[4].value.length < 8) {
+        return adicionandoErro(4);
+    } else {
+        removendoErro(4);
         return true; // Validação da senha está correta
     }
 }
 
 function confirmarSenha() {
-    if (campos[4].value === campos[3].value && campos[4].value.length >= 8) {
-        return removendoErro(4);
+    if (campos[5].value === campos[4].value && campos[5].value.length >= 8) {
+        return removendoErro(5);
     } else {
-        return adicionandoErro(4);
+        return adicionandoErro(5);
     }
 }
 
