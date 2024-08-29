@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="Css/style.css">
+    <title>Formulario Validação</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="lateral">
+
+        </div>
+
+        <div class="boxUm">
+
+            <div class="text">
+
+                <p>A Complete and User-Friendly System!</p>
+
+            </div>
+
+        </div>
+
+        <div class="boxDois">
+
+            <form id="form" method="POST" action="/submit">
+
+                <p>Crie o seu Usuario</p>
+
+                <div class="box">
+
+                    <div class="input-group">
+                        <label for="boxText">Digite seu Nome:</label>
+                        <input type="text" id="nome" name="nome" class="input required" placeholder="Gabriel"
+                            oninput="validacaoNome()">
+                        <span class="span-required">O nome precisa de no mínimo 4 caracteres</span>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="boxText">Digite seu Sobrenome:</label>
+                        <input type="text" id="sobrenome" name="sobrenome" class="input required" placeholder="Marques"
+                            oninput="validacaoSobrenome()">
+                        <span class="span-required">O sobrenome precisa de no mínimo 4 caracteres</span>
+                    </div>
+
+                </div>
+
+                <div class="box">
+
+                    <div class="input-group">
+                        <label for="email">Digite seu E-mail:</label>
+                        <input type="email" id="email" name="email" class="input required"
+                            placeholder="gabriel@gmail.com" oninput="validacaoEmail()">
+                        <span class="span-required">O e-mail está inválido</span>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="text">Digite seu Telefone:</label>
+                        <input type="tel" id="telefone" name="telefone" class="input required"
+                            placeholder="(11)99999-9999" oninput="validacaoNumero()">
+                        <span class="span-required">Digite um número correto</span>
+                    </div>
+
+                </div>
+
+                <div class="box">
+
+                    <div class="input-group">
+                        <label for="senha">Digite sua Senha:</label>
+                        <input type="password" id="senha" name="senha" class="input required" placeholder="*********"
+                            oninput="validacaoSenha()">
+                        <span class="span-required">A senha precisa de no mínimo 8 dígitos</span>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="senha">Confirme sua Senha:</label>
+                        <input type="password" id="confirmaSenha" name="confirmaSenha" class="input required"
+                            placeholder="*********" oninput="confirmarSenha()">
+                        <span class="span-required">Senha não compatível com a de cima</span>
+                    </div>
+
+                </div>
+
+                <div class="boxTres">
+
+                    <button class="button" type="submit">Cadastrar</button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <div id="toast" class="toast">Usuário criado com sucesso!</div>
+
+    <script src="Js/main.js"></script>
+
+    <script>
+
+        document.getElementById('form').addEventListener('submit', function (event) {
+            event.preventDefault(); // Previne o comportamento padrão de envio do formulário
+
+            const campos = document.querySelectorAll('.required');
+
+            // Obtém os valores dos campos do formulário
+            const dados = {
+            nome: campos[0].value,
+            sobrenome: campos[1].value,
+            email: campos[2].value,
+            telefone: campos[3].value,
+            senha: campos[4].value
+            };
+
+            // Envia os dados para o servidor
+            fetch('/submit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+
+                body: JSON.stringify(dados)
+            })
+                .then(response => response.text())
+                .then(data => {
+                    console.log('Sucesso:', data);
+                    showToast('Usuário criado com sucesso!');
+                })
+                .catch(error => {
+                    console.error('Erro:', error);
+                });
+        });
+
+       /*  function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = 'toast show';
+            setTimeout(() => {
+                toast.className = toast.className.replace('show', '');
+            }, 3000);
+        } */
+
+    </script>
+
+</body>
+
+</html>
