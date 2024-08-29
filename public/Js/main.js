@@ -3,9 +3,10 @@ const campos = document.querySelectorAll('.required');
 const span = document.querySelectorAll('.span-required'); //pegando todos os elementos com a mesma class
 const emailRegex = /^([A-Za-z0-9_\-.+])+@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,})$/; //validação de e-mail, peguie do stack
 
-form.addEventListener('submit', (event) =>{
+form.addEventListener('submit', (event) => {
     event.preventDefault();
     if (validacaoNome() && validacaoSobrenome() && validacaoEmail() && validacaoNumero() && validacaoSenha() && confirmarSenha()) {
+        //passando todos os campos para uma variavel direta
         const dados = {
             nome: campos[0].value,
             sobrenome: campos[1].value,
@@ -13,14 +14,33 @@ form.addEventListener('submit', (event) =>{
             telefone: campos[3].value,
             senha: campos[4].value
         };
-        console.log(JSON.stringify(dados)); // Aqui você pode enviar os dados para o servidor ou usá-los conforme necessário
+
+        // Envia os dados para o servidor
+        fetch('/submit', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+
+            body: JSON.stringify(dados)
+        })
+            .then(response => response.text())
+            .then(data => {
+                console.log('Sucesso:', data);
+                showToast('Usuário criado com sucesso!');
+            })
+            .catch(error => {
+                console.error('Erro:', error);
+            });
+
+        console.log(JSON.stringify(dados));//validando os dados que estão indo ao banco
 
         // Exibir o Toast Notification
         showToast('Usuário criado com sucesso!');
-        
-        // Limpar os campos após o envio
-        /* campos.forEach(campo => campo.value = '');
-        span.forEach(spanElemento => spanElemento.style.display = 'none'); */
+
+        // Limpar os campos após o envio dos dados e das validações
+        campos.forEach(campo => campo.value = '');
+        span.forEach(spanElemento => spanElemento.style.display = 'none');
 
     }
 
@@ -71,8 +91,8 @@ function validacaoEmail() {
     }
 }
 
-function validacaoNumero(){
-    if(campos[3].value.length < 14){
+function validacaoNumero() {
+    if (campos[3].value.length < 14) {
         return adicionandoErro(3);
     } else {
         return removendoErro(3);
